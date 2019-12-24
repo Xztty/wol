@@ -1,11 +1,12 @@
 package main
 
 import (
-	"log"
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"log"
 	"net"
+	"os"
 	"regexp"
 )
 
@@ -107,16 +108,18 @@ func (mp *MagicPacket) Marshal() ([]byte, error) {
 }
 
 const (
-	HOST = "192.168.31.158"      //电脑ip
 	PORT = ":9"                //wol端口，默认都是9
 	MAC  = "70:85:C2:76:60:7F" //电脑mac地址
 )
 
 func main() {
-	// 当手机连入WiFi的时候发送唤醒数据包
-	err := Wol(HOST+PORT, MAC)
+	if len(os.Args) < 3 {
+		log.Println("args too less, usage wol $ip $mac")
+		return
+	}
+	log.Println(os.Args)
+	err := Wol(os.Args[1]+PORT, os.Args[2])
 	if err != nil {
 		log.Println("wake on lan failed, error:" + err.Error())
 	}
 }
-
