@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"log"
 	"net"
 	"os"
 	"regexp"
@@ -114,12 +113,12 @@ const (
 
 func main() {
 	if len(os.Args) < 3 {
-		log.Println("args too less, usage wol $ip $mac")
+		fmt.Println("args too less, usage wol $ip $mac")
 		return
 	}
-	log.Println(os.Args)
+	fmt.Println(os.Args)
 	err := Wol(os.Args[1]+PORT, os.Args[2])
 	if err != nil {
-		log.Println("wake on lan failed, error:" + err.Error())
+		fmt.Println("wake on lan failed, error:" + err.Error())
 	}
 }
